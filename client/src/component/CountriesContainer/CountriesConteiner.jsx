@@ -1,102 +1,98 @@
 import CountryComponent from "../CountryComponent/CountryComponent"
 import style from "./CountriesConteiner.module.css"
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { getAllCountries, filterContinent, orderCountry, orderPopulation, filterCountryByName } from "../redux/actions";
+import Pagination from "../Pagination/Pagination";
+
 
 const CountriesConteiner = () => {
-    const countries = [
-        {
-            "imgflag": "https://flagcdn.com/tf.svg",
-            "name": "French Southern and Antarctic Lands",
-            "continent": "Antarctica"
-        },
-        {
-            "imgflag": "https://flagcdn.com/cu.svg",
-            "name": "Cuba",
-            "continent": "North America"
-        },
-        {
-            "imgflag": "https://flagcdn.com/kw.svg",
-            "name": "Kuwait",
-            "continent": "Asia"
-        },
-        {
-            "imgflag": "https://flagcdn.com/bg.svg",
-            "name": "Bulgaria",
-            "continent": "Europe"
-        },
-        {
-            "imgflag": "https://flagcdn.com/ng.svg",
-            "name": "Nigeria",
-            "continent": "Africa"
-        },
-        {
-            "imgflag": "https://flagcdn.com/fm.svg",
-            "name": "Micronesia",
-            "continent": "Oceania"
-        },
-        {
-            "imgflag": "https://flagcdn.com/uz.svg",
-            "name": "Uzbekistan",
-            "continent": "Asia"
-        },
-        {
-            "imgflag": "https://flagcdn.com/mc.svg",
-            "name": "Monaco",
-            "continent": "Europe"
-        },
-        {
-            "imgflag": "https://flagcdn.com/ni.svg",
-            "name": "Nicaragua",
-            "continent": "North America"
-        },
-        {
-            "imgflag": "https://flagcdn.com/hu.svg",
-            "name": "Hungary",
-            "continent": "Europe"
-        },
-        {
-            "imgflag": "https://flagcdn.com/ph.svg",
-            "name": "Philippines",
-            "continent": "Asia"
-        },
-        {
-            "imgflag": "https://flagcdn.com/ie.svg",
-            "name": "Ireland",
-            "continent": "Europe"
-        },
-        {
-            "imgflag": "https://flagcdn.com/tw.svg",
-            "name": "Taiwan",
-            "continent": "Asia"
-        },
-        {
-            "imgflag": "https://flagcdn.com/bf.svg",
-            "name": "Burkina Faso",
-            "continent": "Africa"
-        },
-        {
-            "imgflag": "https://flagcdn.com/sc.svg",
-            "name": "Seychelles",
-            "continent": "Africa"
-        },
-        {
-            "imgflag": "https://flagcdn.com/es.svg",
-            "name": "Spain",
-            "continent": "Europe"
-        }]
+
+    const countryWname   = useSelector(state => state.countryWname)
+    
+    const [currentPage, setCurrentPage ] = useState(1);
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getAllCountries())
+    }, [dispatch])
+
+    const countries = useSelector(state => state.countries)
+    const filterCountry = useSelector(state => state.filterCountry)
+
+    const handlerChange = (event) => {
+        dispatch(filterContinent(event.target.value))
+    }
+
+    const upOrderHand = (event) => {
+
+        if (event.target.value === "upward") {
+            const countriesOrdenados = [...filterCountry].sort((a, b) => a.name.localeCompare(b.name))
+            dispatch(orderCountry(countriesOrdenados))
+        }
+
+        if (event.target.value === "falling") {
+            const countriesOrdenados = [...filterCountry].sort((a, b) => b.name.localeCompare(a.name))
+            dispatch(orderCountry(countriesOrdenados))
+        }
+    }
+
+
+    const popOrderHand = (event) => {
+        if (event.target.value === "maxPoblation") {
+            const maxPobCountry = [...filterCountry].sort((a, b) => b.population - a.population)
+            dispatch(orderPopulation(maxPobCountry))
+        }
+        if (event.target.value === "minPoblation") {
+            const maxPobCountry = [...filterCountry].sort((a, b) => a.population - b.population)
+            dispatch(orderPopulation(maxPobCountry))
+        }
+    }
+
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const byNameHandler = (event) => {
+setSearchQuery(event.target.value);
+    }
+    const countryN = (event) =>{
+        event.preventDefault()
+        dispatch(filterCountryByName(searchQuery))
+    }
+
+
     return (
         <div className={style.conteiner}>
-            
-            {
+            <form >
+                <input type="search" value={searchQuery} onChange={byNameHandler} />
+                <button type="submit" onClick={countryN}>Buscar</button>
+                <select onChange={handlerChange}>
+                    <option value=""></option>
+                    <option value="Antarctica">Antarctica</option>
+                    <option value="North America">North America</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Oceania">Oceania</option>
+                    <option value="South America">South America</option>
+                </select>
 
-                countries.map( country => {
-                    return <CountryComponent
-                      imgflag={country.imgflag}
-                      name={country.name}
-                      continent={country.continent}  
-                    />
-                    
-                })
-            
+                <select onChange={upOrderHand}>
+                    <option value=""></option>
+                    <option value="upward">Upward</option>
+                    <option value="falling">Falling</option>
+
+                </select>
+
+                <select onChange={popOrderHand}>
+                    <option value=""></option>
+                    <option value="maxPoblation">MaxPoblation</option>
+                    <option value="minPoblation">MinPoblation</option>
+                </select>
+            </form>
+
+            <Pagination currentPage={currentPage}
+                setCurrentPage={setCurrentPage} countries={filterCountry} />
+            {
+                console.log(filterCountry)
             }
 
         </div>

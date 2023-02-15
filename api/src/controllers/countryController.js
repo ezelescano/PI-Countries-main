@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const getCountries = (async () => {
     const countDB = await Country.findAll({
-        attributes: ['imgflag', 'name', 'continent']
+        attributes: ['imgflag', 'name', 'continent', 'population']
     })
     return countDB;
 });
