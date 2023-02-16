@@ -43,9 +43,11 @@ const Pagination = ({ countries, currentPage, setCurrentPage }) => {
 
                 currentCountries.map((countries, i) => {
                     return <CountryComponent
+                    
                         imgflag={countries.imgflag}
                         name={countries.name}
                         continent={countries.continent}
+                        activities= {countries.activities}
                         key={i}
                     />
 

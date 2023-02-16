@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 // import { useDispatch,useSelector} from "react-redux";
 // import { createActi } from "../../component/redux/actions";
 
 // "name", "dificulty", "duration", "season"
-
 export const validate = ({ name, dificulty, duration, season, countryId }) => {
     const errors = {};
     errors.name = name === "" ? "Need a name" : errors.name;
@@ -12,10 +12,11 @@ export const validate = ({ name, dificulty, duration, season, countryId }) => {
     errors.duration = typeof (duration) != "number" ? "Activity duration" : errors.duration;
     errors.season = !season ? "A season is required" : errors.season;
     errors.countryId = countryId.length < 3 ? "Coutry without 3 letters" : errors.countryId;
-
+    
     return errors;
 }
 export default function Form() {
+    const history = useHistory();
     const [inputs, setInputs] = React.useState({
         name: "",
         dificulty: "",
@@ -39,16 +40,18 @@ export default function Form() {
         setInputs({ ...inputs, [property]: value })
     }
 
-    // const submitHandler = async (event) => {
-    //     event.preventDefault()
-    //     const result = await axios.post("http://localhost:3001/activities", inputs)
-    //     dispatch(createActi(result.data))
-    // }
+    
+    const submitHandler = (event) => {
+        event.preventDefault()
+         axios.post("http://localhost:3001/activities", inputs)
+         history.push("/home")
+         
+    }
         return (
 
             <div>
                 <h1>ESTO ES  EL FORMULARIO</h1>
-                <form >
+                <form onSubmit={submitHandler} >
 
                     <label>Name:</label>
                     <input type="text" onChange={changeHandler} value={inputs.name} name="name"></input>
@@ -57,7 +60,7 @@ export default function Form() {
                     <label>Duration:</label>
                     <input type="text" onChange={changeHandler} value={inputs.duration} name="duration"></input>
                     <label>Country:</label>
-                    <input type="text" onChange={changeHandler} value={inputs.countryId} name="country"></input>
+                    <input type="text" onChange={changeHandler} value={inputs.countryId} name="countryId"></input>
                     <label>Season</label>
                     <select >
                         <option value=""></option>
@@ -66,7 +69,7 @@ export default function Form() {
                         <option value="autumn">Autumn</option>
                         <option value="spring">Spring</option>
                     </select>
-                    <button>Create</button>
+                    <button type="submit">Create</button>
                 </form>
             </div>
 
