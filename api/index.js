@@ -28,7 +28,9 @@ conn.sync({ force: true }).then(() => {
 
     const allCountriesDB = Country.findAll();
     if(!allCountriesDB.length) {
-      const apiCountries = (await axios.get("https://restcountries.com/v3/all")).data;
+      const {data} = await axios.get("https://restcountries.com/v3/all");
+      const apiCountries = data
+      
       var apiCountriesMap = apiCountries.map((elem)=> {
         return {
           id:elem.cca3,
@@ -41,8 +43,10 @@ conn.sync({ force: true }).then(() => {
           population: elem.population
         }
       })
+      console.log("/////////////////////////////////////////////", apiCountriesMap[0]);
       await Country.bulkCreate(apiCountriesMap);
-      console.log("///////////HECHO///////////");   
+      const dtabase = await Country.findAll();
+      console.log("///////////HECHO///////////", dtabase);   
     }
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
