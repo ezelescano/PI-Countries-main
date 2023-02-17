@@ -47,6 +47,15 @@ export default function Form() {
          history.push("/home")
          
     }
+
+const handlerselect = (event)=>{
+    const property = event.target.name
+    const value = event.target.value
+
+    setErrors(validate({ ...inputs, [property]: value }))
+    setInputs({ ...inputs, [property]: value })
+}
+
         return (
 
             <div>
@@ -64,10 +73,10 @@ export default function Form() {
                     <label>Season</label>
                     <select >
                         <option value=""></option>
-                        <option value="winter">Winter</option>
-                        <option value="summer">Summer</option>
-                        <option value="autumn">Autumn</option>
-                        <option value="spring">Spring</option>
+                        <option value="winter" onChange={changeHandler}>Winter</option>
+                        <option value="summer" onChange={changeHandler}>Summer</option>
+                        <option value="autumn" onChange={changeHandler}>Autumn</option>
+                        <option value="spring" onChange={changeHandler}>Spring</option>
                     </select>
                     <button type="submit">Create</button>
                 </form>

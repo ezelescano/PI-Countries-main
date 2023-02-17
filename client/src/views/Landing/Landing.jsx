@@ -1,9 +1,17 @@
-
+import {Link} from "react-router-dom";
+import landing from "../../assets/landing.jpg"
+// import styled from "./Landing.module.css"
 
 const Landing = () => {
     return(
         <>
-        <h1>ESTO ES EL LANDING</h1>
+        <Link to="/home">
+            <div>
+                <img src={landing} />
+            </div>
+            <button >Home</button>
+        </Link>
+
         </>
     )
 }

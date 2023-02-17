@@ -43,10 +43,10 @@ conn.sync({ force: true }).then(() => {
           population: elem.population
         }
       })
-      console.log("/////////////////////////////////////////////", apiCountriesMap[0]);
+      /* console.log("/////////////////////////////////////////////", apiCountriesMap[0]); */
       await Country.bulkCreate(apiCountriesMap);
       const dtabase = await Country.findAll();
-      console.log("///////////HECHO///////////", dtabase);   
+      /* console.log("///////////HECHO///////////", dtabase); */   
     }
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

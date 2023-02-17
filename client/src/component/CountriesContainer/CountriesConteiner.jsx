@@ -2,7 +2,7 @@ import CountryComponent from "../CountryComponent/CountryComponent"
 import style from "./CountriesConteiner.module.css"
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllCountries, filterContinent, orderCountry, orderPopulation, filterCountryByName } from "../redux/actions";
+import { getAllCountries, filterContinent, orderCountry, orderPopulation, filterCountryByName, getAllActivities } from "../redux/actions";
 import Pagination from "../Pagination/Pagination";
 
 
@@ -14,6 +14,7 @@ const CountriesConteiner = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getAllCountries())
+        dispatch(getAllActivities())
     }, [dispatch])
 
     const countries = useSelector(state => state.countries)

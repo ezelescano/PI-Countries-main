@@ -8,11 +8,8 @@ const CountryComponent = (props) => {
             <img src={props.imgflag} alt={props.name} />
             <p>Oficial Name: {props.name}</p>
             <p>Continent: {props.continent}</p>
-            {/* <p>Activities: { */}
-                {/* props.activities?.map(d=>{ */}
-                    {/* return <span> {d} </span> */}
-                {/* }) */}
-            {/* } </p> */}
+            <p>Activities: {props.activities.length && props.activities[0]?.name }</p> 
+            {console.log("////////////////7\\\\\\\\\\\\\\", JSON.stringify(props.activities[0]?.name))}
         </div>
     )
 }

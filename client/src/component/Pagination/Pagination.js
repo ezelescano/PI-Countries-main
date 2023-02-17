@@ -40,7 +40,7 @@ const Pagination = ({ countries, currentPage, setCurrentPage }) => {
                 </ul>
             </nav>
          {
-
+                
                 currentCountries.map((countries, i) => {
                     return <CountryComponent
                     

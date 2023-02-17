@@ -1,5 +1,7 @@
-import { GET_ALL_COUNTRIES, FILTER_CONTINENT, ORDER_COUNTRY,ORDER_POPULATION, FILTER_COUNTRY} from "./actionType";
-const initialState = { countries: [], filterCountry: [], countryWname: [] };
+import { GET_ALL_COUNTRIES, FILTER_CONTINENT, ORDER_COUNTRY, ORDER_POPULATION, FILTER_COUNTRY, GET_ALL_ACTIVITIES } from "./actionType";
+const initialState = { countries: [], filterCountry: [], countryWname: [], activities: [] };
+
+
 
 
 const rootReducer = (state = initialState, action) => {
@@ -8,7 +10,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filterCountry: action.payload,
-                
+
                 countries: action.payload
             }
         case FILTER_CONTINENT:
@@ -20,19 +22,25 @@ const rootReducer = (state = initialState, action) => {
 
 
         case ORDER_COUNTRY:
-                    return {
-                        ...state, filterCountry: action.payload
-                    }
+            return {
+                ...state, filterCountry: action.payload
+            }
 
-        case ORDER_POPULATION: 
-        return {
-            ...state, filterCountry:action.payload
-        }
+        case ORDER_POPULATION:
+            return {
+                ...state, filterCountry: action.payload
+            }
         case FILTER_COUNTRY:
-        state.filterCountry = action.payload  
-        console.log("////////////////////////////////////////////////",action.payload);  
-        return{
+           state.filterCountry = action.payload
+            return {
                 ...state, countryWname: action.payload
+            }
+        case GET_ALL_ACTIVITIES:
+            // console.log("/////////////////ACTION\\\\\\\\\\\\", action.payload);
+            return {
+                ...state,
+                activities: action.payload
+
             }
         default:
             return {
@@ -42,19 +50,10 @@ const rootReducer = (state = initialState, action) => {
             break;
     }
 
+
+
+   
+
 }
-export default rootReducer;
 
-
-
-// case ORDER_TITLE:
-//             return {
-//                 ...state, foods: (action.payload === 'Ascendente')
-//                     ? [...state.foods.sort((a, b) => a.title.localeCompare(b.title))]
-//                     : [...state.foods.sort((a, b) => b.title.localeCompare(a.title))],
-//                 foodsCopy: (action.payload === 'Ascendente')
-//                     ? [...state.foodsCopy.sort((a, b) => a.title.localeCompare(b.title))]
-//                     : [...state.foodsCopy.sort((a, b) => b.title.localeCompare(a.title))],
-//                 currentPage:0
-
-//             }
+export default rootReducer

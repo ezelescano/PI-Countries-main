@@ -6,10 +6,12 @@ const getCountriesHandler = async (req, res) => {
    const { name } = req.query;
    if (!name) {
       try {
+         
+       console.log("mauro cosologuea countDB")
          const allCountry = await getCountries();
          res.status(200).json(allCountry);
       } catch (error) {
-         res.status(500).json({ error: 'The country you requested was not found' });
+         res.status(400).json({ error: 'The country you requested was not found' });
       }
    } else {
       try {

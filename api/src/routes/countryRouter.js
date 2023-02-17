@@ -8,6 +8,8 @@ countryRouter.get("/", getCountriesHandler);
 
 countryRouter.get("/:id", countryIdHandler);
 
+//countryRouter.post("/", )
+
 // countryRouter.get("..?name", (req, res) => {
 //     res.status(200).send("NIY: ESTA RUTA TRAE LOS PAISES POR NOMBRE");
 // });

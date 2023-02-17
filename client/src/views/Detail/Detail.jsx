@@ -1,9 +1,9 @@
-const Detail = () => {
-    return(
-        <>
-        <h1>ESTO ES EL DETAIL</h1>
-        </>
-    )
-}
+// const Detail = () => {
+//     return(
+//     console.log("hola");
 
-export default Detail;
+
+//     )
+// }
+
+// export default Detail;
